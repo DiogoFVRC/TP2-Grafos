@@ -1,11 +1,12 @@
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <vector>
 #include <tuple>
 
 using namespace std;
 
-class graph
+class Graph
 {
 private:
     // matrix that stores graph data
@@ -17,10 +18,10 @@ private:
     vector<tuple<int, int>> pathsFound;
 public:
     // constructors
-    graph(const vector<vector<int>> &matrix, int numPaths);
-    graph(const vector<vector<int>> &matrix);
-    graph(string filePath);
-    graph();
+    Graph(const vector<vector<int>> &matrix, int numPaths);
+    Graph(const vector<vector<int>> &matrix);
+    Graph(string filePath);
+    Graph();
     
     // getters and setters
     int getNumPaths();
@@ -30,40 +31,145 @@ public:
     vector<tuple<int,int>> getPathsFound();
 
     // auxiliary methods
-    graph generate_random_graph();
-    graph graph_from_txt(string filePath);
+    Graph generate_random_graph();
+    Graph graph_from_txt(string filePath);
     vector<vector<int>> reverse_graph(vector<vector<int>> graph);
+    void print_graph();
 };
 
-graph::graph(const vector<vector<int>> &matrix, int numPaths){
+Graph::Graph(const vector<vector<int>> &matrix, int numPaths){
     // initializes and sets the values for the adjancency matrix
     adjacency_matrix = matrix;
     //sets number of paths
     numPaths = numPaths;
 }
 
-graph::graph(const vector<vector<int>> &matrix)
+Graph::Graph(const vector<vector<int>> &matrix)
 {    
     // initializes and sets the values for the adjancency matrix
     adjacency_matrix = matrix;
 }
 
-int graph::getNumPaths()
+Graph::Graph(string filePath)
+{
+    string buff;
+
+    int vertexQty;
+    int edgeQty;
+
+    ifstream myfile (filePath);
+    if (myfile.is_open())
+    {
+        int v1, v2;
+        myfile >> buff;
+        vertexQty = stoi(buff);
+        
+        myfile >> buff;
+        edgeQty = stoi(buff);
+
+        myfile >> buff;
+        numPaths = stoi(buff);
+        
+        adjacency_matrix  = vector<vector<int>>(vertexQty, vector<int> (vertexQty, -1));
+
+        for (int i = 0; i < edgeQty; i++)
+        {
+            myfile >> buff;
+            v1 = stoi(buff);
+            myfile >> buff;
+            v2 = stoi(buff);
+            adjacency_matrix[v1][v2] = 1;
+        }
+        
+        myfile.close();
+    }
+    else cout << "Unable to open file"; 
+}
+
+Graph::Graph()
+{    
+    adjacency_matrix = vector<vector<int>>();
+    numPaths = -1;
+}
+
+int Graph::getNumPaths()
 {
     return numPaths;
 }
 
-void graph::setNPathsFound(int num)
+void Graph::setNPathsFound(int num)
 {
     nPathsFound = num;
 }
 
-int graph::getNPathsFound()
+int Graph::getNPathsFound()
 {
     return nPathsFound;
 }
 
-void graph::setPathsFound(vector<tuple<int, int>> paths)
+void Graph::setPathsFound(vector<tuple<int, int>> paths)
 {
     pathsFound = paths;
+}
+
+Graph Graph::graph_from_txt(string filePath)
+{    
+    string buff;
+
+    int vertexQty;
+    int edgeQty;
+    int pathQty;
+
+    vector<vector<int>> matrix;
+
+    ifstream myfile (filePath);
+    if (myfile.is_open())
+    {
+        int v1, v2;
+        myfile >> buff;
+        vertexQty = stoi(buff);
+        
+        myfile >> buff;
+        edgeQty = stoi(buff);
+
+        myfile >> buff;
+        pathQty = stoi(buff);
+        
+        matrix  = vector<vector<int>>(vertexQty, vector<int> (vertexQty, -1));
+
+        for (int i = 0; i < edgeQty; i++)
+        {
+            myfile >> buff;
+            v1 = stoi(buff);
+            myfile >> buff;
+            v2 = stoi(buff);
+            matrix[v1][v2] = 1;
+        }
+        
+        myfile.close();
+    }
+    else cout << "Unable to open file"; 
+
+    return Graph(matrix, pathQty);
+}
+
+void Graph::print_graph()
+{
+    for (int i = 0; i < adjacency_matrix[0].size(); i++)
+    {
+        cout << "[ ";
+        for (int j = 0; j < adjacency_matrix[0].size(); j++)
+        {
+            int val = adjacency_matrix[i][j];
+            if (val == 1)
+            {
+                cout << "0" << val << " ";
+            }
+            else
+            {
+                cout << val << " ";
+            }            
+        }
+        cout << " ]" << endl;
+    }    
 }

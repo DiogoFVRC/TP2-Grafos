@@ -14,6 +14,9 @@
  */
 int main(int argc, char const *argv[])
 {
-    /* code */
+    Graph G("data/exampleGraph.txt");
+    
+    G.print_graph();
+
     return 0;
 }
