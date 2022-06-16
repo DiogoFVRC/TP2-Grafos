@@ -14,17 +14,24 @@
  */
 int main(int argc, char const *argv[])
 {
-    Graph G("data/exampleGraph.txt");
-    G.print_graph();
-    map<int, int> parentsMap = G.breadth_first_search(0);
-    // map<int, int> parentsMap = G.depth_first_search(0);
-
-    // for (auto &&i : parentsMap)
-    // {
-    //     cout << "Parent Pairs: (" << (char)(i.first + 'A') << "," << (char)(i.second + 'A') << ")" << endl;
-    // }
+    vector<Graph> grafos;
+    for (size_t i = 1; i <= 20; i++)
+    {
+        cout << "data/Grafo" + to_string(i) + ".txt" << endl;
+        grafos.push_back(Graph("data/Grafo" + to_string(i) + ".txt"));
+        grafos[i-1].ford_fulkerson();
+        cout << endl;
+    }
     
-    G.ford_fulkerson();
-
+    // Graph G1("data/Grafo1.txt");
+    // G1.ford_fulkerson();
+    // Graph G2("data/Grafo2.txt");
+    // G2.ford_fulkerson();
+    // Graph G3("data/Grafo3.txt");
+    // G3.ford_fulkerson();
+    // Graph G4("data/Grafo4.txt");
+    // G4.ford_fulkerson();
+    // Graph G5("data/Grafo5.txt");
+    // G5.ford_fulkerson();
     return 0;
 }
