@@ -3,6 +3,8 @@
 #include<string>
 #include <sstream>
 
+// Modified from https://www.sanfoundry.com/cpp-program-construct-random-directed-acyclic-graph/
+
 // The maximum number of the vertex for the sample random graph.
 // #define NOV 8192
 int NOV = 20;
