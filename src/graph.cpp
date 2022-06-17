@@ -8,6 +8,7 @@
 #include <queue>
 #include <unordered_set>
 #include <set>
+#include <cstdlib>
 
 using namespace std;
 
@@ -30,7 +31,7 @@ public:
     Graph(const vector<vector<int>> &matrix, int numPaths);
     Graph(const vector<vector<int>> &matrix);
     Graph(string filePath);
-    Graph();
+    Graph(int size);
     
     // getters and setters
     int getNumPaths();
@@ -125,9 +126,10 @@ Graph::Graph(string filePath)
  * @brief Default constructor for a new Graph
  * 
  */
-Graph::Graph()
+Graph::Graph(int size)
 {    
-    adjacency_matrix = vector<vector<int>>();
+    std::srand(1); // get constant seed
+    adjacency_matrix = vector<vector<int>>(size);
     numPaths = -1;
 }
 
