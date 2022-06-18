@@ -65,7 +65,7 @@ void GenerateRandGraphs(int e)
     // create header
     // nVertex, nEdges, Solution
     // e1 e2
-    string buff = to_string(NOV+1) + " " +  to_string(e+1) + " -1" ;
+    string buff = to_string(NOV+1) + " " +  to_string(e) + " -1" ;
 	cout <<  buff << endl;
 
 	// Print the random graph.

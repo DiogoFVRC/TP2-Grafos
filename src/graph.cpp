@@ -9,6 +9,7 @@
 #include <unordered_set>
 #include <set>
 #include <cstdlib>
+#include <iomanip>
 
 using namespace std;
 
@@ -55,8 +56,8 @@ public:
     map<int, int> breadth_first_search(int rootVertex);
     bool breadth_first_search(int rootVertex, int targetVertex, map<int, int> &parents);
     bool breadth_first_search(vector<vector<int>> graph,int rootVertex, int targetVertex, vector<int> &parents);
-    void ford_fulkerson();
-    void ford_fulkerson(vector<vector<int>> graph);
+    void find_unique_paths();
+    void find_unique_paths(vector<vector<int>> graph);
 };
 
 /**
@@ -98,6 +99,7 @@ Graph::Graph(string filePath)
     {
         int v1, v2;
         myfile >> buff;
+        cout << buff << endl;
         vertexQty = stoi(buff);
         
         myfile >> buff;
@@ -216,7 +218,15 @@ vector<int> Graph::obtain_successors(int vertex)
     }
     return successors;
 }
-
+/**
+ * @brief Runs through the graph and looks for successors
+ * O(V) de espaco
+ * O(V) de tempo 
+ * 
+ * @param vertex 
+ * @param graph 
+ * @return vector<int> 
+ */
 vector<int> Graph::obtain_successors(int vertex, vector<vector<int>> graph)
 {
     vector<int> successors;
@@ -361,6 +371,8 @@ bool Graph::breadth_first_search(int rootVertex, int targetVertex, map<int,int> 
 
 /**
  * @brief Breadth first search that starts on the rootVertex
+ * O(V^2) em tempo, caso seja grafo completo, realiza obtain_sucessors V vezes
+ * O(V) em espaco, guarda todos os vertices visitados na lista de visita
  * 
  * @param rootVertex source vertex
  * @param targetVertex terminal vertex
@@ -398,51 +410,36 @@ bool Graph::breadth_first_search(vector<vector<int>> graph,int rootVertex, int t
             }            
         }        
     }
-    // for (auto &&i : visited)
-    // {
-    //     cout << "Visited vert: " << i << endl;
-    // }
-    // cout << "Any paths found? " << (visited.count(targetVertex)) << endl;
     
 
     return (visited.count(targetVertex));
 }
 
 /**
- * @brief Ford fulkerson implementation
- * @ref reference for implementation "https://www.geeksforgeeks.org/ford-fulkerson-algorithm-for-maximum-flow-problem/"
+ * @brief Algorithm to find all unique paths from a source to a terminal node
+ * O(N^4) ou O(EV^3) em tempo, BFS toma O(V^2) em tempo e pode obter caminhos aumentantes
+ * O(VE) vezes
+ * O(V^2) em espaco, para armazenar grafo reverso e grafo limpo
  * 
+ * @ref reference for implementation "https://www.geeksforgeeks.org/ford-fulkerson-algorithm-for-maximum-flow-problem/"
  */
-void Graph::ford_fulkerson()
+void Graph::find_unique_paths()
 {
     int u, v;
     int s = 0, t = adjacency_matrix.size()-1;
- 
-    // Create a residual graph and fill the residual graph
-    // with given capacities in the original graph as
-    // residual capacities in residual graph
-    vector<vector<int>> rGraph; // Residual graph where rGraph[i][j]
-                   // indicates residual capacity of edge
-                   // from i to j (if there is an edge. If
-                   // rGraph[i][j] is 0, then there is not)
+    vector<vector<int>> rGraph; 
     size_t graphLen = adjacency_matrix.size();
-    vector<vector<int>> uniquePaths;
-
-    // for (u = 0; u < graphLen; u++)
-    //     for (v = 0; v < graphLen; v++)
-    //         rGraph[u][v] = adjacency_matrix[u][v];
- 
+    vector<vector<int>> uniquePaths; 
     rGraph = vector<vector<int>>(adjacency_matrix);
 
     vector<int> parent(graphLen); // This array is filled by BFS and to
-                   // store path
+                                  // store path
  
     int max_flow = 0; // There is no flow initially
  
     // Augment the flow while there is path from source to
     // sink
     while (breadth_first_search(rGraph, s, t, parent)) {
-        // uniquePaths.push_back(parent);
         // Find minimum residual capacity of the edges along
         // the path filled by BFS. Or we can say find the
         // maximum flow through the path found.
@@ -464,9 +461,8 @@ void Graph::ford_fulkerson()
         max_flow += path_flow;
     }
 
-    // print_clean_graph(rGraph);
-    // adjacency_matrix[i][j] - graph[i][j];
-    vector<vector<int>> cleanGraph(adjacency_matrix);
+    // graph with only used edges from original graph
+    vector<vector<int>> cleanGraph(adjacency_matrix); 
 
     for (size_t i = 0; i < graphLen; i++)
     {
@@ -496,16 +492,7 @@ void Graph::ford_fulkerson()
     for (size_t i = 0; i < max_flow; i++)
     {
         print_path(uniquePaths[i], false);
-    //     cout << "[ ";
-    //     for (size_t j = 0; j < uniquePaths[i].size(); j++)
-    //     {
-    //         cout << "(Vertex: " << (char)(j + 'A') << " Parent: " << (char)(uniquePaths[i][j] + 'A') << " )";
-    //     }        
-    //     cout << " ]" << endl;
     }
-    
-    // Return the overall flow
-    // return max_flow;
 }
 
 /**
