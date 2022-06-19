@@ -1,0 +1,110 @@
+\documentclass[a4paper,12pt,Times]{article}
+\usepackage{abakos}  %pacote com padrão da Abakos baseado no padrão da PUC
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usepackage{verbatim}
+\usepackage{pgfplots}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Capa da revista
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\setcounter{page}{80} %iniciar contador de pagina de valor especificado
+\newcommand{\monog}{Instituto de Ciências Exatas e de Informática Pontifícia Universidade Católica de Minas Gerais}
+\newcommand{\monogES}{ICEI - PUC Minas}
+\newcommand{\tipo}{Artigo }  % Especificar a seção tipo do trabalho: Artigo, Resumo, Tese, Dociê etc
+\newcommand{\origem}{Brasil}  % p. xx-xx – páginas inicial-final do artigo
+% \newcommand{\lcc}{\scriptsize{Licença Creative Commons Attribution-NonCommercial-NoDerivs 3.0 Unported}}
+
+%%%%%%%%%%%%%%%%%INFORMAÇÕES SOBRE AUTOR PRINCIPAL %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\AutorA}{Felipe Tadeu Góes Guimarães}
+\newcommand{\funcaoA}{Bacharel em Ciências da Computação}
+\newcommand{\emailA}{@sga.pucminas.br}
+\newcommand{\cursA}{Programa de graduação em Ciências da Computação da PUC Minas}
+
+\newcommand{\AutorB}{Bruno Pena Baêta}
+\newcommand{\funcaoB}{Bacharel em Ciências da Computação}
+\newcommand{\emailB}{@sga.pucminas.br}
+\newcommand{\cursB}{Programa de graduação em Ciências da Computação da PUC Minas}
+
+
+\newcommand{\AutorC}{Diogo Castro}
+\newcommand{\funcaoC}{Bacharel em Ciências da Computação}
+\newcommand{\emailC}{@sga.pucminas.br}
+\newcommand{\cursC}{Programa de graduação em Ciências da Computação da PUC Minas}
+
+
+\newcommand{\AutorD}{João Quintão}
+\newcommand{\funcaoD}{Bacharel em Sistemas de Informação}
+\newcommand{\emailD}{@pucminas.br}
+\newcommand{\cursD}{Instituto de Ciências Exatas e de Informática da PUC Minas}
+
+% Definir macros para o nome da Instituição, da Faculdade, etc.
+\newcommand{\univ}{Pontifícia Universidade Católica de Minas Gerais}
+
+\newcommand{\keyword}[1]{\textsf{#1}}
+
+\begin{document}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% %% Pagina de titulo
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{flushleft}
+
+\begin{minipage} [c][5cm][b]{16.5cm} % a primeira minipágina tem uma altura de 1.5cm e uma largura de 2.3cm.
+% comando que introduz o logo da escola que nesta altura já terá de estar na pasta imagens que 
+%por sua vez está na pasta onde se guardou o arquivo tex. E introduzimos essa imagem com a mesma altura da minipage.
+\includegraphics[scale=1.1]{figuras/pucmg.png} 
+\end{minipage}
+
+ \vspace{0cm} {
+  \normalsize{\monogES}
+ }
+\end{flushleft}
+\begin{flushright}
+\singlespacing 
+\normalsize{\AutorB \footnote{\funcaoB, \\ \cursB, \origem. }} \\
+\normalsize{\AutorC \footnote{\funcaoC, \\ \cursC, \origem. }} \\
+\normalsize{\AutorA \footnote{\funcaoA, \\ \cursA, \origem. }} \\
+\normalsize{\AutorD \footnote{\funcaoD, \\ \cursD, \origem. }} \\
+% \normalsize{\AutorC \footnote{\funcaoC, E-mail:\emailC \\ \cursC, \origem. }} \\
+% \normalsize{\AutorD \footnote{\funcaoD \\ Pais de origem: \origemD. E-mail: \emailD}} \\
+%deixar com o valor `0` e usar o '*' no inicio da frase
+% \symbolfootnote[0]{Artigo recebido em 10 de julho de 1983 e aprovado em 29 de maio 2012}
+\end{flushright}
+\thispagestyle{empty}
+
+\begin{abstract}
+\noindent
+Neste trabalho iremos apresentar uma solução para se determinar o número máximo de caminhos disjuntos em arestas existentes em um grafo. Neste problema, dado um grafo e um par de vértices, sendo uma origem e outro o destino, deseja-se encontrar no final a quantidade de caminhos distintos em arestas entre os dois vértices dados. Além disso deve-se listar cada um dos caminhos encontrados. Utilizaremos o Algoritmo de Edmonds-Karp para determinar os caminhos disjuntos e para comparação vamos utilizar os caminhos disjuntos que achamos manualmente.
+\\\textbf{\keyword{Palavras-chave: caminhos disjuntos, Edmonds-Karp }} 
+\end{abstract}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage 
+
+\selectlanguage{brazilian}
+ \onehalfspace  % espaçamento 1.5 entre linhas
+ \setlength{\parindent}{1.25cm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% INICIO DO TEXTO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\include{textos}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FIM DO TEXTO
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% \selectlanguage{brazil}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Inicio bibliografia
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+ \newpage
+ \singlespace{
+ \bibliographystyle{abntex2-alf}
+ \bibliography{bibliografia}
+ }
+
+\end{document}
